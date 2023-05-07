@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gl2.Gles3HomeActivity.MenuAdapter.MenuHolder
 import com.example.gl2.fgl.FGLViewActivity
+import com.example.gl2.image.SGLViewActivity
 
 class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -28,19 +29,19 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
         )
         data = ArrayList()
         add("绘制形体", FGLViewActivity::class.java)
-        /*add("图片处理",SGLViewActivity.class)
-        add("图形变换",VaryActivity.class)
-        add("相机",CameraActivity.class)
-        add("相机2 动画",Camera2Activity.class)
-        add("相机3 美颜",Camera3Activity.class)
-        add("压缩纹理动画",ZipActivity.class)
-        add("FBO使用",FBOActivity.class)
-        add("EGL后台处理",EGLBackEnvActivity.class)
-        add("3D obj模型",ObjLoadActivity.class)
-        add("obj+mtl模型",ObjLoadActivity2.class)
-        add("VR效果",VrContextActivity.class)
-        add("颜色混合",BlendActivity.class)
-        add("光照",LightActivity.class)*/
+        add("图片处理", SGLViewActivity::class.java)
+//        add("图形变换",VaryActivity.class)
+//        add("相机",CameraActivity.class)
+//        add("相机2 动画",Camera2Activity.class)
+//        add("相机3 美颜",Camera3Activity.class)
+//        add("压缩纹理动画",ZipActivity.class)
+//        add("FBO使用",FBOActivity.class)
+//        add("EGL后台处理",EGLBackEnvActivity.class)
+//        add("3D obj模型",ObjLoadActivity.class)
+//        add("obj+mtl模型",ObjLoadActivity2.class)
+//        add("VR效果",VrContextActivity.class)
+//        add("颜色混合",BlendActivity.class)
+//        add("光照",LightActivity.class)
         mList!!.adapter = MenuAdapter()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

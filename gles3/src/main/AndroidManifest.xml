@@ -8,6 +8,9 @@
         <activity
             android:name=".Gles3HomeActivity"
             android:exported="false" />
+        <activity
+            android:name=".image.SGLViewActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
