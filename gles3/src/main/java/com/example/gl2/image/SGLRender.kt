@@ -1,85 +1,70 @@
-/*
- *
- * SGLRender.java
- *
- * Created by Wuwang on 2016/10/15
- */
-package com.example.gl2.image;
+package com.example.gl2.image
 
-import android.graphics.Bitmap;
-import android.opengl.GLSurfaceView;
-import android.view.View;
-
-
-import com.example.gl2.image.filter.AFilter;
-import com.example.gl2.image.filter.ColorFilter;
-import com.example.gl2.image.filter.ContrastColorFilter;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
+import android.graphics.Bitmap
+import android.opengl.GLSurfaceView
+import android.view.View
+import com.example.gl2.image.filter.AFilter
+import com.example.gl2.image.filter.ColorFilter
+import com.example.gl2.image.filter.ContrastColorFilter
+import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 /**
  * Description:
  */
-public class SGLRender implements GLSurfaceView.Renderer {
+class SGLRender(mView: View) : GLSurfaceView.Renderer {
+    private var mFilter: AFilter
+    private var bitmap: Bitmap? = null
+    private var width = 0
+    private var height = 0
+    private var refreshFlag = false
+    private var config: EGLConfig? = null
 
-    private AFilter mFilter;
-    private Bitmap bitmap;
-    private int width, height;
-    private boolean refreshFlag = false;
-    private EGLConfig config;
-
-    public SGLRender(View mView) {
-        mFilter = new ContrastColorFilter(mView.getContext(), ColorFilter.Filter.NONE);
+    init {
+        mFilter = ContrastColorFilter(mView.context, ColorFilter.Filter.NONE)
     }
 
-    public void setFilter(AFilter filter) {
-        refreshFlag = true;
-        mFilter = filter;
-        if (bitmap != null) {
-            mFilter.setBitmap(bitmap);
+    fun setImageBuffer(buffer: IntArray?, width: Int, height: Int) {
+        bitmap = Bitmap.createBitmap(buffer!!, width, height, Bitmap.Config.RGB_565)
+        mFilter.setBitmap(bitmap)
+    }
+
+    fun refresh() {
+        refreshFlag = true
+    }
+
+    var filter: AFilter
+        get() = mFilter
+        set(filter) {
+            refreshFlag = true
+            mFilter = filter
+            if (bitmap != null) {
+                mFilter.setBitmap(bitmap)
+            }
         }
+
+    fun setImage(bitmap: Bitmap?) {
+        this.bitmap = bitmap
+        mFilter.setBitmap(bitmap)
     }
 
-    public void setImageBuffer(int[] buffer, int width, int height) {
-        bitmap = Bitmap.createBitmap(buffer, width, height, Bitmap.Config.RGB_565);
-        mFilter.setBitmap(bitmap);
+    override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
+        this.config = config
+        mFilter.onSurfaceCreated(gl, config)
     }
 
-    public void refresh() {
-        refreshFlag = true;
+    override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
+        this.width = width
+        this.height = height
+        mFilter.onSurfaceChanged(gl, width, height)
     }
 
-    public AFilter getFilter() {
-        return mFilter;
-    }
-
-    public void setImage(Bitmap bitmap) {
-        this.bitmap = bitmap;
-        mFilter.setBitmap(bitmap);
-    }
-
-    @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        this.config = config;
-        mFilter.onSurfaceCreated(gl, config);
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
-        this.width = width;
-        this.height = height;
-        mFilter.onSurfaceChanged(gl, width, height);
-    }
-
-    @Override
-    public void onDrawFrame(GL10 gl) {
+    override fun onDrawFrame(gl: GL10) {
         if (refreshFlag && width != 0 && height != 0) {
-            mFilter.onSurfaceCreated(gl, config);
-            mFilter.onSurfaceChanged(gl, width, height);
-            refreshFlag = false;
+            config?.let { mFilter.onSurfaceCreated(gl, it) }
+            mFilter.onSurfaceChanged(gl, width, height)
+            refreshFlag = false
         }
-        mFilter.onDrawFrame(gl);
+        mFilter.onDrawFrame(gl)
     }
 }

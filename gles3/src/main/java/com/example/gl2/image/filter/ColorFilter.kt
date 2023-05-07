@@ -1,59 +1,37 @@
-package com.example.gl2.image.filter;
+package com.example.gl2.image.filter
 
-import android.content.Context;
-import android.opengl.GLES20;
+import android.content.Context
+import android.opengl.GLES20
 
 /**
  * Description:
  */
-public class ColorFilter extends AFilter {
+class ColorFilter(context: Context?, private val filter: Filter) : AFilter(
+    context!!, "filter/default_vertex.sh", "filter/color_fragment.sh"
+) {
+    private var hChangeType = 0
+    private var hChangeColor = 0
 
-    private Filter filter;
-
-    private int hChangeType;
-    private int hChangeColor;
-
-    public ColorFilter(Context context, Filter filter) {
-        super(context, "filter/default_vertex.sh", "filter/color_fragment.sh");
-        this.filter = filter;
+    override fun onDrawSet() {
+        GLES20.glUniform1i(hChangeType, filter.type)
+        GLES20.glUniform3fv(hChangeColor, 1, filter.data(), 0)
     }
 
-    @Override
-    public void onDrawSet() {
-        GLES20.glUniform1i(hChangeType, filter.getType());
-        GLES20.glUniform3fv(hChangeColor, 1, filter.data(), 0);
+    override fun onDrawCreatedSet(mProgram: Int) {
+        hChangeType = GLES20.glGetUniformLocation(mProgram, "vChangeType")
+        hChangeColor = GLES20.glGetUniformLocation(mProgram, "vChangeColor")
     }
 
-    @Override
-    public void onDrawCreatedSet(int mProgram) {
-        hChangeType = GLES20.glGetUniformLocation(mProgram, "vChangeType");
-        hChangeColor = GLES20.glGetUniformLocation(mProgram, "vChangeColor");
-    }
+    enum class Filter(val type: Int, private val data: FloatArray) {
+        NONE(0, floatArrayOf(0.0f, 0.0f, 0.0f)),
+        GRAY(1, floatArrayOf(0.299f, 0.587f, 0.114f)),
+        COOL(2, floatArrayOf(0.0f, 0.0f, 0.1f)),
+        WARM(2, floatArrayOf(0.1f, 0.1f, 0.0f)),
+        BLUR(3, floatArrayOf(0.006f, 0.004f, 0.002f)),
+        MAGN(4, floatArrayOf(0.0f, 0.0f, 0.4f));
 
-    public enum Filter {
-
-        NONE(0, new float[]{0.0f, 0.0f, 0.0f}),
-        GRAY(1, new float[]{0.299f, 0.587f, 0.114f}),
-        COOL(2, new float[]{0.0f, 0.0f, 0.1f}),
-        WARM(2, new float[]{0.1f, 0.1f, 0.0f}),
-        BLUR(3, new float[]{0.006f, 0.004f, 0.002f}),
-        MAGN(4, new float[]{0.0f, 0.0f, 0.4f});
-
-
-        private int vChangeType;
-        private float[] data;
-
-        Filter(int vChangeType, float[] data) {
-            this.vChangeType = vChangeType;
-            this.data = data;
-        }
-
-        public int getType() {
-            return vChangeType;
-        }
-
-        public float[] data() {
-            return data;
+        fun data(): FloatArray {
+            return data
         }
     }
 }

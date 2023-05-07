@@ -1,56 +1,40 @@
-/*
- *
- * SGLView.java
- *
- * Created by Wuwang on 2016/10/15
- * Copyright © 2016年 深圳哎吖科技. All rights reserved.
- */
-package com.example.gl2.image;
+package com.example.gl2.image
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.opengl.GLSurfaceView;
-import android.util.AttributeSet;
-
-import com.example.gl2.image.filter.AFilter;
-
-import java.io.IOException;
-
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.opengl.GLSurfaceView
+import android.util.AttributeSet
+import com.example.gl2.image.filter.AFilter
+import java.io.IOException
 
 /**
  * Description:
  */
-public class SGLView extends GLSurfaceView {
+class SGLView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null) :
+    GLSurfaceView(context, attrs) {
+    var render: SGLRender? = null
+        private set
 
-    private SGLRender render;
-
-    public SGLView(Context context) {
-        this(context, null);
+    init {
+        init()
     }
 
-    public SGLView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    private void init() {
-        setEGLContextClientVersion(2);
-        render = new SGLRender(this);
-        setRenderer(render);
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+    private fun init() {
+        setEGLContextClientVersion(2)
+        render = SGLRender(this)
+        setRenderer(render)
+        renderMode = RENDERMODE_WHEN_DIRTY
         try {
-            render.setImage(BitmapFactory.decodeStream(getResources().getAssets().open("texture/fengj.png")));
-            requestRender();
-        } catch (IOException e) {
-            e.printStackTrace();
+            render!!.setImage(BitmapFactory.decodeStream(resources.assets.open("texture/fengj.png")))
+            requestRender()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 
-    public SGLRender getRender() {
-        return render;
-    }
-
-    public void setFilter(AFilter filter) {
-        render.setFilter(filter);
+    fun setFilter(filter: AFilter?) {
+        if (filter != null) {
+            render!!.filter = filter
+        }
     }
 }
