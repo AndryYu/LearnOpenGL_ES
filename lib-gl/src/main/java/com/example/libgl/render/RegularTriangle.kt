@@ -3,6 +3,7 @@ package com.example.libgl.render
 import android.content.Context
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView
+import android.opengl.Matrix
 import com.example.libgl.utils.ShaderUtils
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -10,7 +11,10 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class RegularTriangle(context: Context) : GLSurfaceView.Renderer {
+/**
+ * 正三角形绘制
+ */
+class RegularTriangle(context: Context) : RenderInterface {
     private lateinit var vertexBuffer: FloatBuffer
     private var shaderProgram: Int = 0
 
@@ -25,6 +29,10 @@ class RegularTriangle(context: Context) : GLSurfaceView.Renderer {
 
     var positionHandler = 0
     var colorHandler = 0
+    var matrixHandler = 0
+    private val mViewMatrix = FloatArray(16)
+    private val mProjectMatrix = FloatArray(16)
+    private val mMVPMatrix = FloatArray(16)
 
     private val color = floatArrayOf(1f, 0f, 0f, 1f)
     private val mContext: Context
@@ -47,20 +55,31 @@ class RegularTriangle(context: Context) : GLSurfaceView.Renderer {
         )
     }
 
-    override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
+    override fun onCreated() {
         GLES30.glClearColor(0f, 1f, 1f, 1f)
-        GLES30.glViewport(0, 0, 1280, 960)
+
         create()
     }
 
-    override fun onSurfaceChanged(p0: GL10?, p1: Int, p2: Int) {
+    override fun onChanged( width: Int, height: Int) {
+        GLES30.glViewport(0, 0, width, height)
 
+        //计算宽高比
+        val ratio = width.toFloat() / height
+        //设置透视投影
+        Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1f, 1f, 3f, 7f)
+        //设置相机位置
+        Matrix.setLookAtM(mViewMatrix, 0, 0f, 0f, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
+        //计算变换矩阵
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0)
     }
 
-    override fun onDrawFrame(p0: GL10?) {
+    override fun onDrawFrame() {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
 
         GLES30.glUseProgram(shaderProgram)
+        matrixHandler = GLES30.glGetUniformLocation(shaderProgram, "vMatrix")
+        GLES30.glUniformMatrix4fv(matrixHandler, 1,false, mMVPMatrix, 0)
         //获取程序中顶点位置属性引用
         positionHandler = GLES30.glGetAttribLocation(shaderProgram, "vPosition")
         //启用顶点位置

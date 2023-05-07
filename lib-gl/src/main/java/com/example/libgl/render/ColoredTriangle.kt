@@ -12,7 +12,11 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class ColoredTriangle(context: Context) :GLSurfaceView.Renderer {
+/**
+ * 带颜色三角形
+ *
+ */
+class ColoredTriangle(context: Context) :RenderInterface {
     private lateinit var vertexBuffer: FloatBuffer
     private lateinit var colorBuffer:FloatBuffer
     private var shaderProgram: Int = 0
@@ -36,11 +40,6 @@ class ColoredTriangle(context: Context) :GLSurfaceView.Renderer {
     )
     private val mContext: Context
 
-    private val mViewMatrix = FloatArray(16)
-    private val mProjectMatrix = FloatArray(16)
-    private val mMVPMatrix = FloatArray(16)
-    private var mMatrixHandler = 0
-
     init {
         mContext = context
     }
@@ -63,41 +62,25 @@ class ColoredTriangle(context: Context) :GLSurfaceView.Renderer {
         shaderProgram = ShaderUtils.createProgram(
             mContext.resources,
             "vshader/colortriangle.sh",
-            "fshader/triangle.sh"
+            "fshader/colortriangle.sh"
         )
     }
 
-    override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
+    override fun onCreated() {
         GLES30.glClearColor(0f, 1f, 1f, 1f)
-        GLES30.glViewport(0, 0, 1280, 960)
+
         create()
     }
 
-    override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int) {
-        //计算宽高比
-        val ratio: Float = width.toFloat() / height
-        //设置透视投影
-        //设置透视投影
-        Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1f, 1f, 3f, 7f)
-        //设置相机位置
-        //设置相机位置
-        Matrix.setLookAtM(mViewMatrix, 0, 0f, 0f, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
-        //计算变换矩阵
-        //计算变换矩阵
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0)
+    override fun onChanged(width: Int, height: Int) {
+        GLES30.glViewport(0, 0, width, height)
     }
 
-    override fun onDrawFrame(p0: GL10?) {
+    override fun onDrawFrame() {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
 
 
         GLES30.glUseProgram(shaderProgram)
-        //获取变换矩阵vMatrix成员句柄
-        //获取变换矩阵vMatrix成员句柄
-        mMatrixHandler = GLES30.glGetUniformLocation(shaderProgram, "vMatrix")
-        //指定vMatrix的值
-        //指定vMatrix的值
-        GLES30.glUniformMatrix4fv(mMatrixHandler, 1, false, mMVPMatrix, 0)
         //获取程序中顶点位置属性引用
         positionHandler = GLES30.glGetAttribLocation(shaderProgram, "vPosition")
         //启用顶点位置
@@ -112,7 +95,7 @@ class ColoredTriangle(context: Context) :GLSurfaceView.Renderer {
             vertexBuffer
         )
         //获取程序中颜色属性引用
-        colorHandler = GLES30.glGetUniformLocation(shaderProgram, "aColor")
+        colorHandler = GLES30.glGetAttribLocation(shaderProgram, "aColor")
         GLES30.glEnableVertexAttribArray(colorHandler)
         //将顶点数组位置数据送入渲染管线
         GLES30.glVertexAttribPointer(

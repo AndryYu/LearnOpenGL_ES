@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/mBtn"
+    <TextView
+        android:id="@+id/tv_render"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:textColor="#ffffff"
+        android:gravity="center"
+        android:padding="6dp"
+        android:textColor="#ff2b2b2b"
         android:textSize="14sp" />
 </RelativeLayout>

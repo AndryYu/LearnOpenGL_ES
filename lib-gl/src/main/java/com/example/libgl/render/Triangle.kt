@@ -10,7 +10,10 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class Triangle(context: Context) : GLSurfaceView.Renderer {
+/**
+ * 三角形绘制
+ */
+class Triangle(context: Context) : RenderInterface {
     private lateinit var vertexBuffer: FloatBuffer
     private var shaderProgram: Int = 0
 
@@ -47,17 +50,16 @@ class Triangle(context: Context) : GLSurfaceView.Renderer {
         )
     }
 
-    override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
+    override fun onCreated() {
         GLES30.glClearColor(0f, 1f, 1f, 1f)
-        GLES30.glViewport(0, 0, 1280, 960)
         create()
     }
 
-    override fun onSurfaceChanged(p0: GL10?, p1: Int, p2: Int) {
-
+    override fun onChanged(width: Int, height: Int) {
+        GLES30.glViewport(0, 0, width, height)
     }
 
-    override fun onDrawFrame(p0: GL10?) {
+    override fun onDrawFrame() {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
 
         GLES30.glUseProgram(shaderProgram)

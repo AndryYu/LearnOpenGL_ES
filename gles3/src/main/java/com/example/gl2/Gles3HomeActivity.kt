@@ -2,6 +2,7 @@ package com.example.gl2
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -41,6 +42,8 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
         add("颜色混合",BlendActivity.class)
         add("光照",LightActivity.class)*/
         mList!!.adapter = MenuAdapter()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun add(name: String, clazz: Class<*>) {
@@ -88,5 +91,13 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
         val position = view.tag as Int
         val bean = data!![position]
         startActivity(Intent(this, bean.clazz))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home){
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
