@@ -1,4 +1,4 @@
-package com.example.gl2
+package com.example.gl
 
 import org.junit.Test
 

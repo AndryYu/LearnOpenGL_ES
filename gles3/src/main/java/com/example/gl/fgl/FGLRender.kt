@@ -1,4 +1,4 @@
-package com.example.gl2.fgl
+package com.example.gl.fgl
 
 import android.content.Context
 import android.opengl.GLSurfaceView

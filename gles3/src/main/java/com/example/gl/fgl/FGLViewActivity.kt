@@ -1,4 +1,4 @@
-package com.example.gl2.fgl
+package com.example.gl.fgl
 
 import android.annotation.SuppressLint
 import android.opengl.GLSurfaceView
@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.widget.AppCompatSpinner
-import com.example.gl2.R
+import com.example.gl.R
 import com.example.libgl.render.ColoredTriangle
 import com.example.libgl.render.RegularTriangle
 import com.example.libgl.render.RenderInterface

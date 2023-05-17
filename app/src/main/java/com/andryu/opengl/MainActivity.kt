@@ -3,9 +3,8 @@ package com.andryu.opengl
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import com.andryu.opengl.databinding.ActivityMainBinding
-import com.example.gl2.Gles3HomeActivity
+import com.example.gl.Gles3HomeActivity
 
 class MainActivity : AppCompatActivity() {
 

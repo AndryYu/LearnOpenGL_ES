@@ -1,4 +1,4 @@
-package com.example.gl2
+package com.example.gl
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gl2.Gles3HomeActivity.MenuAdapter.MenuHolder
-import com.example.gl2.fgl.FGLViewActivity
-import com.example.gl2.image.SGLViewActivity
+import com.example.gl.Gles3HomeActivity.MenuAdapter.MenuHolder
+import com.example.gl.fgl.FGLViewActivity
+import com.example.gl.image.SGLViewActivity
 
 class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -20,7 +20,7 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_gl2_home)
+        setContentView(R.layout.activity_gl_home)
         mList = findViewById<View>(R.id.mList) as RecyclerView
         mList!!.layoutManager = LinearLayoutManager(
             this,

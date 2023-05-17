@@ -1,10 +1,10 @@
-package com.example.gl2.image
+package com.example.gl.image
 
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
-import com.example.gl2.image.filter.AFilter
+import com.example.gl.image.filter.AFilter
 import java.io.IOException
 
 /**
