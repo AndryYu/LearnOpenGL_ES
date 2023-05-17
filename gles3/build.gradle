@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.gl2'
+    namespace 'com.example.gl'
     compileSdk 33
 
     defaultConfig {

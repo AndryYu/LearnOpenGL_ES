@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.gl2.image.SGLView
+    <com.example.gl.image.SGLView
         android:id="@+id/glView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

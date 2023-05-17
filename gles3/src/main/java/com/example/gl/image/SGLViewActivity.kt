@@ -1,12 +1,12 @@
-package com.example.gl2.image
+package com.example.gl.image
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gl2.R
-import com.example.gl2.image.filter.ColorFilter
-import com.example.gl2.image.filter.ContrastColorFilter
+import com.example.gl.R
+import com.example.gl.image.filter.ColorFilter
+import com.example.gl.image.filter.ContrastColorFilter
 
 /**
  * Description:

@@ -1,11 +1,11 @@
-package com.example.gl2.image
+package com.example.gl.image
 
 import android.graphics.Bitmap
 import android.opengl.GLSurfaceView
 import android.view.View
-import com.example.gl2.image.filter.AFilter
-import com.example.gl2.image.filter.ColorFilter
-import com.example.gl2.image.filter.ContrastColorFilter
+import com.example.gl.image.filter.AFilter
+import com.example.gl.image.filter.ColorFilter
+import com.example.gl.image.filter.ContrastColorFilter
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

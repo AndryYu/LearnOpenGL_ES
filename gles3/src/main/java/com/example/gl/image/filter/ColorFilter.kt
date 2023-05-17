@@ -1,4 +1,4 @@
-package com.example.gl2.image.filter
+package com.example.gl.image.filter
 
 import android.content.Context
 import android.opengl.GLES20

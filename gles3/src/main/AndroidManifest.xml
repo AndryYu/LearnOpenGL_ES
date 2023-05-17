@@ -3,6 +3,9 @@
 
     <application>
         <activity
+            android:name=".VaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".fgl.FGLViewActivity"
             android:exported="false" />
         <activity

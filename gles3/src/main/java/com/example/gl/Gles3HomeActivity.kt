@@ -1,4 +1,4 @@
-package com.example.gl2
+package com.example.gl
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gl2.Gles3HomeActivity.MenuAdapter.MenuHolder
-import com.example.gl2.fgl.FGLViewActivity
-import com.example.gl2.image.SGLViewActivity
+import com.example.gl.Gles3HomeActivity.MenuAdapter.MenuHolder
+import com.example.gl.fgl.FGLViewActivity
+import com.example.gl.image.SGLViewActivity
+import com.example.gl.vary.VaryActivity
 
 class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -20,7 +21,7 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_gl2_home)
+        setContentView(R.layout.activity_gl_home)
         mList = findViewById<View>(R.id.mList) as RecyclerView
         mList!!.layoutManager = LinearLayoutManager(
             this,
@@ -30,7 +31,7 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
         data = ArrayList()
         add("绘制形体", FGLViewActivity::class.java)
         add("图片处理", SGLViewActivity::class.java)
-//        add("图形变换",VaryActivity.class)
+        add("图形变换", VaryActivity::class.java)
 //        add("相机",CameraActivity.class)
 //        add("相机2 动画",Camera2Activity.class)
 //        add("相机3 美颜",Camera3Activity.class)
