@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gl.Gles3HomeActivity.MenuAdapter.MenuHolder
 import com.example.gl.fgl.FGLViewActivity
 import com.example.gl.image.SGLViewActivity
+import com.example.gl.vary.VaryActivity
 
 class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -30,7 +31,7 @@ class Gles3HomeActivity : AppCompatActivity(), View.OnClickListener {
         data = ArrayList()
         add("绘制形体", FGLViewActivity::class.java)
         add("图片处理", SGLViewActivity::class.java)
-//        add("图形变换",VaryActivity.class)
+        add("图形变换", VaryActivity::class.java)
 //        add("相机",CameraActivity.class)
 //        add("相机2 动画",Camera2Activity.class)
 //        add("相机3 美颜",Camera3Activity.class)
